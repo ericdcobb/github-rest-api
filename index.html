@@ -1,0 +1,71 @@
+<html ng-app="app">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>GitHub REST API Integration</title>
+
+    <link rel="stylesheet" href="lib/custombootstrap.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="lib/fontawesome/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="lib/octicons/octicons/octicons.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="lib/site.css" media="screen" title="no title" charset="utf-8">
+</head>
+
+<body ng-controller="gitHubDataController">
+
+    <div class="container">
+        <h1 class="text-center">
+                    <a href="{{ userData.html_url}}" class="btn btn-default">
+                        <img src="{{ userData.avatar_url }}" width="80" height="80" alt="{{ userData.login }}">                    
+                    </a>
+                </h1>
+        <div class="panel  panel-default">
+            <div class="panel-heading">
+
+                <form class="form-inline">
+                    <span>
+                            <h4>Issues <span class="badge">{{issueData.length}}</span>
+                    <input ng-model="searchText" placeholder="Find a issue..." class="form-control input-sm">
+                    </h4>
+                    </span>
+                </form>
+
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div ng-repeat="issue in issueData | filter:searchText  | orderBy:predicate:reverse" class="list-group-item ">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>
+                                        <a href="{{issue.html_url}}" target="_blank" >
+                                            {{issue.number}}
+                                        </a>
+                                        <small>{{issue.title}}</small>
+                                    </h4>
+
+                                <small>
+                                        <a href="{{issue.user.html_url}}" target="_blank">
+                                            <i class="fa fa-link"></i> {{issue.user.login}}
+                                        </a>
+                                    </small>
+                            </div>
+                            <div class="col-md-4">
+                                <dl class="dl-horizontal">
+                                    <dt>Last Updated:</dt>
+                                    <dd>{{issue.updated_at | date : short : timezone}}</dd>
+                                    <dt>Created:</dt>
+                                    <dd>{{issue.created_at | date : short : timezone}}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="app/app.js" charset="utf-8"></script>
+</body>
+</body>
+
+</html>
